@@ -23,7 +23,10 @@ export type Project = {
   categoryLabel: string;
   client: string;
   description: string;
-  image: string | null;
+  image: {
+    src: string;
+    alt: string;
+  } | null;
   projectUrl: string | null;
   tags: string[];
   metrics: string;
@@ -111,7 +114,10 @@ export const homeProjects: Project[] = [
     categoryLabel: 'Engenharia de Software',
     client: 'Grupo Logístico Regional',
     description: 'Sistema web centralizado para rastreamento de frotas em tempo real, roteamento otimizado e gestão de armazéns.',
-    image: '/logotipo.png',
+    image: {
+      src: '/logotipo.png',
+      alt: 'Logotipo da ZUTIC',
+    },
     projectUrl: null,
     tags: ['React', 'Node.js', 'PostgreSQL', 'Maps API'],
     metrics: '+35% Eficiência nas Entregas',
