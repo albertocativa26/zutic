@@ -31,10 +31,20 @@ import {
   Check
 } from 'lucide-react';
 
+type Service = {
+  id: string;
+  title: string;
+  tagline: string;
+  desc: string;
+  icon: React.ReactNode;
+  features: string[];
+  deliverables: string[];
+};
+
 export default function ZuticCorporateWebsite() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState(null);
-  const [openFaq, setOpenFaq] = useState(null);
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', company: '', message: '' });
 
@@ -42,14 +52,14 @@ export default function ZuticCorporateWebsite() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormSubmitted(true);
     setTimeout(() => {
