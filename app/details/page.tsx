@@ -375,7 +375,7 @@ export default function ProjectDetailView() {
       {/* FOOTER */}
       <footer className="py-12 bg-[#05070a] border-t border-cyan-900/30 text-xs text-slate-500 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div>© {new Date().getFullYear()} ZUTIC. Todos os direitos reservados.</div>
+          <div>© 2026 ZUTIC. Todos os direitos reservados.</div>
           <a href="/#portfolio" className="text-cyan-400 hover:underline">Voltar aos Projetos</a>
         </div>
       </footer>

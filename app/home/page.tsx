@@ -885,7 +885,7 @@ export default function ZuticCorporateWebsite() {
           </div>
 
           <div className="pt-8 border-t border-cyan-900/20 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>© {new Date().getFullYear()} ZUTIC. Todos os direitos reservados.</div>
+            <div>© 2026 ZUTIC. Todos os direitos reservados.</div>
             <div className="flex gap-6">
               <a href="#inicio" className="hover:text-cyan-400 transition-colors">Termos de Serviço</a>
               <a href="#inicio" className="hover:text-cyan-400 transition-colors">Política de Privacidade</a>
