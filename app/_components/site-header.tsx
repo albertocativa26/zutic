@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
+import ThemeToggle from "./theme-toggle";
 
 const navigationLinks = [
   { id: "inicio", label: "Início" },
@@ -53,6 +54,8 @@ export default function SiteHeader() {
         >
           Fale connosco <ArrowUpRight className="h-4 w-4" />
         </Link>
+
+        <ThemeToggle />
 
         <button
           type="button"

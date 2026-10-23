@@ -300,8 +300,8 @@ export default function ZuticCorporateWebsite() {
               style={{ backgroundImage: `url("${slide.image}")` }}
             />
           ))}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#07090e]/75 via-[#07090e]/75 to-[#07090e]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#07090e]/60 via-transparent to-[#07090e]/60" />
+          <div className="theme-home-overlay theme-home-overlay-vertical absolute inset-0 bg-gradient-to-b from-[#07090e]/75 via-[#07090e]/75 to-[#07090e]" />
+          <div className="theme-home-overlay theme-home-overlay-horizontal absolute inset-0 bg-gradient-to-r from-[#07090e]/60 via-transparent to-[#07090e]/60" />
         </div>
 
         <div className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[150px]" />

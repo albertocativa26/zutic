@@ -48,7 +48,7 @@ export default function ContactosPage() {
       <section className="relative isolate overflow-hidden border-b border-cyan-900/30">
         <div
           aria-hidden="true"
-          className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_left,_rgba(8,145,178,0.18),_transparent_55%),linear-gradient(135deg,_#07090e,_#0b0f19_55%,_#07090e)]"
+          className="theme-hero-background absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_left,_rgba(8,145,178,0.18),_transparent_55%),linear-gradient(135deg,_#07090e,_#0b0f19_55%,_#07090e)]"
         />
         <div
           aria-hidden="true"

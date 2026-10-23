@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #07090e;
+  --foreground: #f1f5f9;
 }
 
 @theme inline {
@@ -12,15 +12,140 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+}
+
+.theme-icon-light {
+  display: block;
+}
+
+.theme-icon-dark {
+  display: none;
+}
+
+:root[data-theme="light"] .theme-icon-light {
+  display: none;
+}
+
+:root[data-theme="light"] .theme-icon-dark {
+  display: block;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+:root[data-theme="light"] body {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+:root[data-theme="light"] [class~="bg-[#07090e]"] {
+  background-color: #f8fafc !important;
+}
+
+:root[data-theme="light"] [class~="bg-[#07090e]/70"],
+:root[data-theme="light"] [class~="bg-[#07090e]/80"],
+:root[data-theme="light"] [class~="bg-[#07090e]/90"],
+:root[data-theme="light"] [class~="bg-[#0d121f]/80"] {
+  background-color: rgb(241 245 249 / 92%) !important;
+}
+
+:root[data-theme="light"] [class~="bg-[#0b0f19]"],
+:root[data-theme="light"] [class~="bg-[#0b0f19]/40"],
+:root[data-theme="light"] [class~="bg-[#0b0f19]/60"],
+:root[data-theme="light"] [class~="bg-[#0b0f19]/70"] {
+  background-color: #ffffff !important;
+}
+
+:root[data-theme="light"] [class~="bg-[#0d121f]"] {
+  background-color: #e2e8f0 !important;
+}
+
+:root[data-theme="light"] [class~="bg-[#0f1524]"] {
+  background-color: #e2e8f0 !important;
+}
+
+:root[data-theme="light"] [class~="bg-[#05070a]"],
+:root[data-theme="light"] [class~="bg-slate-950"],
+:root[data-theme="light"] [class~="bg-slate-900"] {
+  background-color: #f1f5f9 !important;
+}
+
+:root[data-theme="light"] [class~="bg-cyan-950"],
+:root[data-theme="light"] [class~="bg-cyan-950/50"],
+:root[data-theme="light"] [class~="bg-cyan-950/60"],
+:root[data-theme="light"] [class~="bg-cyan-950/70"],
+:root[data-theme="light"] [class~="bg-cyan-950/80"] {
+  background-color: #ecfeff !important;
+}
+
+:root[data-theme="light"] [class~="bg-slate-800"] {
+  background-color: #e2e8f0 !important;
+}
+
+:root[data-theme="light"] [class~="text-white"],
+:root[data-theme="light"] [class~="text-slate-100"] {
+  color: #0f172a !important;
+}
+
+:root[data-theme="light"] [class~="text-slate-200"] {
+  color: #1e293b !important;
+}
+
+:root[data-theme="light"] [class~="text-slate-300"] {
+  color: #334155 !important;
+}
+
+:root[data-theme="light"] [class~="text-slate-400"],
+:root[data-theme="light"] [class~="text-slate-500"],
+:root[data-theme="light"] [class~="text-slate-600"] {
+  color: #475569 !important;
+}
+
+:root[data-theme="light"] [class~="text-cyan-200"],
+:root[data-theme="light"] [class~="text-cyan-300"],
+:root[data-theme="light"] [class~="text-cyan-400"],
+:root[data-theme="light"] [class~="text-cyan-500"] {
+  color: #0e7490 !important;
+}
+
+:root[data-theme="light"] [class~="border-cyan-900/20"],
+:root[data-theme="light"] [class~="border-cyan-900/30"],
+:root[data-theme="light"] [class~="border-cyan-900/40"],
+:root[data-theme="light"] [class~="border-cyan-900/50"] {
+  border-color: #cbd5e1 !important;
+}
+
+:root[data-theme="light"] .theme-hero-background {
+  background-image:
+    radial-gradient(ellipse at top left, rgb(34 211 238 / 14%), transparent 55%),
+    linear-gradient(135deg, #f8fafc, #eaf4fb 55%, #f8fafc) !important;
+}
+
+:root[data-theme="light"] .theme-home-overlay-vertical {
+  background-image: linear-gradient(
+    to bottom,
+    rgb(248 250 252 / 90%),
+    rgb(248 250 252 / 84%) 65%,
+    #f8fafc
+  ) !important;
+}
+
+:root[data-theme="light"] .theme-home-overlay-horizontal {
+  background-image: linear-gradient(
+    to right,
+    rgb(248 250 252 / 36%),
+    transparent,
+    rgb(248 250 252 / 36%)
+  ) !important;
 }
