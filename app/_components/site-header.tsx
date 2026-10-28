@@ -23,10 +23,7 @@ export default function SiteHeader() {
           </span>
         </Link>
 
-        <nav
-          aria-label="Navegação principal"
-            className="hidden flex-1 items-center justify-center gap-5 text-[11px] font-semibold uppercase tracking-wider text-slate-600 lg:flex xl:gap-7"
-        >
+        <nav aria-label="Navegação principal" className="hidden flex-1 items-center justify-center gap-5 text-[11px] font-semibold uppercase tracking-wider text-slate-600 lg:flex xl:gap-7" >
           {navigationLinks.map((link) => (
             <Link
               key={link.id}
@@ -48,34 +45,22 @@ export default function SiteHeader() {
           ))}
         </nav>
 
-        <Link
-          href="/contactos"
-          className="hidden shrink-0 items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-2.5 text-xs font-bold text-slate-950 transition-shadow hover:shadow-lg hover:shadow-cyan-500/25 md:flex"
-        >
+        <Link href="/contactos" className="hidden shrink-0 items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-2.5 text-xs font-bold text-slate-950 transition-shadow hover:shadow-lg hover:shadow-cyan-500/25 md:flex" >
           Fale connosco <ArrowUpRight className="h-4 w-4" />
         </Link>
 
-        <button
-          type="button"
-          onClick={() => setMobileMenuOpen((open) => !open)}
+        <button type="button" onClick={() => setMobileMenuOpen((open) => !open)}
           className="rounded-xl border border-blue-200 bg-blue-50 p-2 text-blue-600 md:hidden"
           aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
-          aria-expanded={mobileMenuOpen}
-          aria-controls="mobile-navigation"
-        >
+          aria-expanded={mobileMenuOpen} aria-controls="mobile-navigation">
           {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
 
       {mobileMenuOpen && (
-        <nav
-          id="mobile-navigation"
-          aria-label="Navegação móvel"
-          className="space-y-2 border-b border-slate-200 bg-white px-4 pb-6 pt-4 shadow-xl shadow-slate-900/10 md:hidden"
-        >
+        <nav id="mobile-navigation" aria-label="Navegação móvel" className="space-y-2 border-b border-slate-200 bg-white px-4 pb-6 pt-4 shadow-xl shadow-slate-900/10 md:hidden" >
           {navigationLinks.map((link) => (
-            <Link
-              key={link.id}
+            <Link key={link.id}
               href={
                 link.id === "contactos"
                   ? "/contactos"
