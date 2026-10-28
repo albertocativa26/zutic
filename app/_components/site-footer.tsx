@@ -2,10 +2,10 @@ import Link from "next/link";
 
 const navigationLinks = [
   { id: "inicio", label: "Início" },
-  { id: "parceiros", label: "Parceiros" },
   { id: "servicos", label: "Serviços" },
+  { id: "processo", label: "Processo" },
   { id: "sobre", label: "Sobre" },
-  { id: "portfolio", label: "Portefólio" },
+  { id: "faq", label: "Perguntas frequentes" },
   { id: "contactos", label: "Contactos" },
 ];
 
@@ -19,7 +19,7 @@ export default function SiteFooter() {
               <span className="rounded bg-cyan-500 px-2 py-0.5 text-sm font-black text-slate-950">
                 ZUTIC
               </span>
-              <span className="font-bold text-slate-300">ZUTIC Angola</span>
+              <span className="font-bold text-slate-300">ZUTIC</span>
             </div>
             <p className="leading-relaxed">
               Desenvolvimento de sistemas corporativos, software à medida e consultoria de transformação tecnológica.
@@ -39,6 +39,8 @@ export default function SiteFooter() {
                           ? "/sobre"
                           : link.id === "servicos"
                             ? "/servicos"
+                            : link.id === "processo" || link.id === "faq"
+                              ? `/#${link.id}`
                             : `/#${link.id}`
                     }
                     className="transition-colors hover:text-cyan-400"

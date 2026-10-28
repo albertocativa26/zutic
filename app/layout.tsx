@@ -56,7 +56,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="pt-AO" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        <div className="flex min-h-screen flex-col overflow-x-hidden bg-[#07090e] pt-20 font-sans text-slate-100 selection:bg-cyan-500 selection:text-slate-950">
+        <div className="flex min-h-screen flex-col overflow-x-hidden bg-white pt-20 font-sans text-slate-900 selection:bg-blue-200 selection:text-blue-950">
           <SiteHeader />
           <div className="flex-1">{children}</div>
           <SiteFooter />

@@ -93,7 +93,7 @@ export default function CookiePolicyModal({ className }: CookiePolicyModalProps)
           className="fixed bottom-4 left-4 z-[60] w-[calc(100vw-2rem)] max-w-md rounded-2xl border border-slate-200 bg-white p-5 text-slate-700 shadow-2xl sm:bottom-6 sm:left-6 sm:p-6"
         >
           <div className="mb-3 flex items-center gap-2">
-            <Cookie className="h-5 w-5 text-[#1E2838]" aria-hidden="true" />
+            <Cookie className="h-5 w-5 text-blue-600" aria-hidden="true" />
             <h2 id="cookie-consent-title" className="font-bold text-slate-900">
               Política de Cookies
             </h2>
@@ -106,21 +106,21 @@ export default function CookiePolicyModal({ className }: CookiePolicyModalProps)
             <button
               type="button"
               onClick={() => saveConsent('accepted')}
-              className="rounded-lg bg-[#1E2838] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1E2838] focus:ring-offset-2"
+              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
             >
               Aceitar
             </button>
             <button
               type="button"
               onClick={() => saveConsent('rejected')}
-              className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-[#1E2838] focus:ring-offset-2"
+              className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
             >
               Rejeitar
             </button>
             <button
               type="button"
               onClick={() => setIsOpen(true)}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-[#1E2838] underline underline-offset-2 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-[#1E2838]"
+              className="rounded-lg px-3 py-2 text-sm font-medium text-blue-600 underline underline-offset-2 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
             >
               Ver política
             </button>
@@ -130,7 +130,7 @@ export default function CookiePolicyModal({ className }: CookiePolicyModalProps)
 
       {isOpen && (
         <div
-          className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/75 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/40 p-4 backdrop-blur-sm"
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) setIsOpen(false);
           }}
@@ -147,7 +147,7 @@ export default function CookiePolicyModal({ className }: CookiePolicyModalProps)
               type="button"
               onClick={() => setIsOpen(false)}
               aria-label="Fechar política de cookies"
-              className="absolute right-4 top-4 rounded-lg p-2 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1E2838]"
+              className="absolute right-4 top-4 rounded-lg p-2 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-600"
             >
               <X className="h-5 w-5" />
             </button>
@@ -200,7 +200,7 @@ export default function CookiePolicyModal({ className }: CookiePolicyModalProps)
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="rounded-lg bg-[#1E2838] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1E2838] focus:ring-offset-2"
+                className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
               >
                 Fechar
               </button>

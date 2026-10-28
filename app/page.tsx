@@ -1,706 +1,620 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, MessageSquare, CheckCircle, X, ChevronLeft, ChevronRight, Pause, Play, Zap, Globe, ArrowUpRight, Cpu, Lock, ChevronDown, Sparkles, BarChart3, Code2, Database, Smartphone } from 'lucide-react';
-import { Service } from '@/types/service';
+import { useMemo, useState } from "react";
+import Link from "next/link";
+import {
+  ArrowDown,
+  ArrowRight,
+  ArrowUpRight,
+  CheckCircle2,
+  ChevronDown,
+  Code2,
+  Cpu,
+  Database,
+  LockKeyhole,
+  MessageSquare,
+  Search,
+  ShieldCheck,
+  Smartphone,
+  Sparkles,
+  Target,
+  Workflow,
+  X,
+  Zap,
+} from "lucide-react";
+import type { Service } from "@/types/service";
 
-const heroSlides = [
+const services: Service[] = [
   {
-    eyebrow: "Engenharia de Software & Sistemas Inteligentes",
-    title: "Transformamos ideias em",
-    highlight: "sistemas inteligentes.",
-    description: "Desenvolvemos software corporativo à medida, aplicações móveis de elevado desempenho e arquiteturas cloud preparadas para escalar o seu negócio.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=2000&q=85",
+    id: "software",
+    title: "Desenvolvimento de Software à Medida",
+    tagline: "Sistemas web, ERPs e aplicações empresariais",
+    desc: "Criamos plataformas e sistemas de gestão adaptados aos processos da sua empresa. Automatize tarefas e acompanhe a informação num só lugar.",
+    icon: <Code2 className="h-6 w-6" />,
+    features: [
+      "Levantamento e análise de requisitos",
+      "Sistemas web e aplicações empresariais",
+      "Painéis de gestão e relatórios",
+      "Integração com ferramentas existentes",
+    ],
+    deliverables: ["Análise e prototipagem", "Desenvolvimento iterativo", "Testes e validação", "Publicação e acompanhamento"],
   },
   {
-    eyebrow: "Tecnologia feita para o seu negócio",
-    title: "Criamos soluções digitais para",
-    highlight: "acelerar o seu crescimento.",
-    description: "Automatize processos e ligue as suas equipas com plataformas seguras, modernas e desenhadas à medida da sua empresa.",
-    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=2000&q=85",
+    id: "mobile",
+    title: "Aplicações Móveis",
+    tagline: "Aplicações para iOS e Android",
+    desc: "Colocamos os seus serviços na mão dos clientes com aplicações móveis intuitivas, funcionais e alinhadas com a identidade da sua marca.",
+    icon: <Smartphone className="h-6 w-6" />,
+    features: [
+      "Aplicações para iOS e Android",
+      "Experiências nativas ou multiplataforma",
+      "Notificações e funcionalidades offline",
+      "Preparação para publicação nas lojas",
+    ],
+    deliverables: ["Desenho da experiência", "Desenvolvimento da aplicação", "Testes em dispositivos", "Preparação para publicação"],
   },
   {
-    eyebrow: "Do conceito à implementação",
-    title: "A sua próxima inovação começa",
-    highlight: "com a equipa certa.",
-    description: "Aliamos estratégia, engenharia e acompanhamento próximo para transformar desafios tecnológicos em resultados concretos.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=2000&q=85",
+    id: "consultoria",
+    title: "Consultoria & Arquitetura de TI",
+    tagline: "Estratégia tecnológica para o seu negócio",
+    desc: "Avaliamos os seus sistemas e necessidades para definir uma arquitetura robusta, sustentável e preparada para acompanhar o crescimento da empresa.",
+    icon: <Cpu className="h-6 w-6" />,
+    features: [
+      "Análise de sistemas e requisitos",
+      "Auditoria técnica e diagnóstico",
+      "Arquiteturas preparadas para escalar",
+      "Planeamento de migrações tecnológicas",
+    ],
+    deliverables: ["Diagnóstico técnico", "Recomendações priorizadas", "Desenho da arquitetura", "Roteiro de implementação"],
+  },
+  {
+    id: "automacao",
+    title: "Integrações & Automação",
+    tagline: "Processos conectados e eficientes",
+    desc: "Ligamos sistemas e automatizamos tarefas repetitivas para reduzir o trabalho manual, evitar erros e tornar as operações mais ágeis.",
+    icon: <Zap className="h-6 w-6" />,
+    features: [
+      "Integração entre plataformas",
+      "Automação de tarefas repetitivas",
+      "APIs, webhooks e sincronização de dados",
+      "Melhoria de fluxos de trabalho",
+    ],
+    deliverables: ["Mapeamento do processo", "Plano de integração", "Implementação e testes", "Documentação técnica"],
+  },
+  {
+    id: "seguranca",
+    title: "Cibersegurança & Conformidade",
+    tagline: "Proteção para os seus sistemas e dados",
+    desc: "Apoiamos a proteção da infraestrutura e da informação da sua empresa com práticas de segurança ajustadas à sua operação.",
+    icon: <LockKeyhole className="h-6 w-6" />,
+    features: [
+      "Revisão de segurança das aplicações",
+      "Gestão de acessos e permissões",
+      "Boas práticas de proteção de dados",
+      "Recomendações e plano de mitigação",
+    ],
+    deliverables: ["Avaliação inicial", "Identificação de riscos", "Plano de mitigação", "Acompanhamento técnico"],
+  },
+  {
+    id: "cloud",
+    title: "Infraestrutura Cloud & DevOps",
+    tagline: "Infraestrutura preparada para evoluir",
+    desc: "Configuramos ambientes cloud, processos de publicação e monitorização para apoiar sistemas fiáveis e facilitar a evolução dos seus produtos.",
+    icon: <Database className="h-6 w-6" />,
+    features: [
+      "Configuração de ambientes cloud",
+      "Pipelines de publicação automatizada",
+      "Monitorização e alertas operacionais",
+      "Otimização da infraestrutura",
+    ],
+    deliverables: ["Ambientes de desenvolvimento e produção", "Pipeline CI/CD", "Monitorização", "Documentação e transferência"],
+  },
+];
+
+const serviceCategories = [
+  { id: "todos", label: "Todos" },
+  { id: "software", label: "Software" },
+  { id: "mobile", label: "Aplicações móveis" },
+  { id: "consultoria", label: "Consultoria" },
+  { id: "automacao", label: "Automação" },
+  { id: "seguranca", label: "Segurança" },
+  { id: "cloud", label: "Cloud" },
+];
+
+const processSteps = [
+  {
+    number: "01",
+    title: "Diagnóstico das necessidades",
+    description: "Ouvimos a sua equipa, compreendemos os processos e definimos o desafio.",
+    icon: Target,
+  },
+  {
+    number: "02",
+    title: "Planeamento da solução",
+    description: "Alinhamos objetivos, funcionalidades, prioridades e próximos passos.",
+    icon: Cpu,
+  },
+  {
+    number: "03",
+    title: "Desenvolvimento",
+    description: "Construímos a solução de forma iterativa, com validação ao longo do projeto.",
+    icon: Code2,
+  },
+  {
+    number: "04",
+    title: "Lançamento e acompanhamento",
+    description: "Preparamos a entrega e apoiamos a evolução após a entrada em funcionamento.",
+    icon: Workflow,
+  },
+];
+
+const commitments = [
+  {
+    title: "Soluções adequadas ao seu contexto",
+    description: "Cada projeto começa pela compreensão do negócio, das pessoas e dos processos envolvidos.",
+    icon: Sparkles,
+  },
+  {
+    title: "Segurança desde o início",
+    description: "Consideramos proteção de dados e boas práticas técnicas ao longo do desenvolvimento.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Acompanhamento próximo",
+    description: "Mantemos comunicação clara para que saiba o que está a ser feito e quais são os próximos passos.",
+    icon: MessageSquare,
+  },
+];
+
+const faqs = [
+  {
+    q: "Como começa um projeto com a ZUTIC?",
+    a: "Começamos por uma conversa para compreender os objetivos e as necessidades da sua empresa. A partir daí, definimos o âmbito e apresentamos uma proposta com as etapas do projeto.",
+  },
+  {
+    q: "A ZUTIC oferece acompanhamento após o lançamento?",
+    a: "Sim. Podemos apoiar a manutenção, correção de problemas e evolução da solução após a sua entrada em funcionamento, de acordo com o âmbito acordado.",
+  },
+  {
+    q: "As soluções podem integrar-se com sistemas existentes?",
+    a: "Sim. Analisamos os sistemas e interfaces disponíveis e planeamos integrações com as ferramentas utilizadas pela sua empresa.",
+  },
+  {
+    q: "Como posso pedir uma proposta?",
+    a: "Envie-nos uma mensagem pela página de contactos com uma breve descrição do desafio. A nossa equipa entrará em contacto para perceber os detalhes.",
   },
 ];
 
 export default function ZuticCorporateWebsite() {
-  const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
-  const [isHeroSlideshowPaused, setIsHeroSlideshowPaused] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("todos");
   const [selectedService, setSelectedService] = useState<Service | null>(null);
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '', company: '', message: '' });
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  // Posição suave do glow seguindo o cursor nas seções
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const filteredServices = useMemo(() => {
+    const query = searchTerm.trim().toLocaleLowerCase("pt");
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+    return services.filter((service) => {
+      const matchesCategory = selectedCategory === "todos" || service.id === selectedCategory;
+      const searchableContent = [
+        service.title,
+        service.tagline,
+        service.desc,
+        ...service.features,
+      ].join(" ").toLocaleLowerCase("pt");
 
-  useEffect(() => {
-    if (
-      isHeroSlideshowPaused ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      return;
-    }
-
-    const interval = window.setInterval(() => {
-      setCurrentHeroSlide((current) => (current + 1) % heroSlides.length);
-    }, 6000);
-
-    return () => window.clearInterval(interval);
-  }, [isHeroSlideshowPaused]);
-
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setFormSubmitted(true);
-    setTimeout(() => {
-      setFormSubmitted(false);
-      setFormData({ name: '', email: '', company: '', message: '' });
-    }, 4000);
-  };
-
-  // Lista de imagens de parceiros para o carrossel infinito
-  const partnerLogos = [
-    { name: "Partner 1", logo: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=300&q=80" },
-    { name: "Partner 2", logo: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=300&q=80" },
-    { name: "Partner 3", logo: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=300&q=80" },
-    { name: "Partner 4", logo: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=300&q=80" },
-    { name: "Partner 5", logo: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=300&q=80" },
-    { name: "Partner 6", logo: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=300&q=80" },
-  ];
-
-  const services = [
-    {
-      id: "software",
-      title: "Desenvolvimento de Software à Medida",
-      tagline: "Sistemas Web, ERPs e Aplicações Nativas",
-      desc: "Criamos produtos digitais de alta performance com arquitetura moderna (Next.js, Node.js, Cloud Native) desenhados sob medida para o seu ecossistema de negócio.",
-      icon: <Code2 className="w-6 h-6 text-cyan-400" />,
-      features: [
-        "Aplicações Web Progressivas (PWA) e Portais Corporativos",
-        "Sistemas ERP/CRM integrados com AGT e Multicaixa Express",
-        "APIs RESTful e GraphQL escaláveis com microserviços",
-        "Design de Interface (UI/UX) focado em conversão e usabilidade"
-      ],
-      deliverables: ["Prototipagem & Validação", "Desenvolvimento Agile", "Testes de Carga & QA", "Publicação em Nuvem"]
-    },
-    {
-      id: "mobile",
-      title: "Aplicações Móveis (iOS & Android)",
-      tagline: "Experiências Nativas e Híbridas de Elevada Fluidez",
-      desc: "Desenvolvemos apps móveis intuitivas com desempenho nativo, geolocalização, notificações push, autenticação biométrica e integração com carteiras digitais.",
-      icon: <Smartphone className="w-6 h-6 text-cyan-400" />,
-      features: [
-        "Desenvolvimento nativo (Swift / Kotlin) e híbrido (React Native)",
-        "Integração com gateways de pagamento locais e internacionais",
-        "Segurança reforçada com criptografia ponta a ponta",
-        "Publicação e otimização ASO nas lojas App Store e Google Play"
-      ],
-      deliverables: ["UI/UX Mobile First", "Desenvolvimento da App", "Aprovação nas Lojas", "Suporte Contínuo"]
-    },
-    {
-      id: "consultoria",
-      title: "Consultoria & Arquitetura de TI",
-      tagline: "Estratégia Tecnológica para Escala Sustentável",
-      desc: "Analisamos e otimizamos a infraestrutura tecnológica da sua empresa para garantir máxima eficiência operacional, redução de custos e prontidão para o futuro.",
-      icon: <Cpu className="w-6 h-6 text-cyan-400" />,
-      features: [
-        "Auditoria de código e diagnóstico de dívida técnica",
-        "Desenho de arquiteturas resilientes e tolerantes a falhas",
-        "Migração segura para infraestruturas Cloud (AWS, Azure)",
-        "Planos de continuidade de negócio e recuperação de desastres"
-      ],
-      deliverables: ["Relatório de Diagnóstico", "Blueprints de Arquitetura", "Roteiro de Implementação"]
-    },
-    {
-      id: "automacao",
-      title: "Automação de Processos (RPA)",
-      tagline: "Eliminação de Tarefas Repetitivas e Manualidade",
-      desc: "Implementamos bots e rotinas inteligentes para automatizar fluxos operacionais, reduzindo tempo de execução e eliminando erros humanos.",
-      icon: <Zap className="w-6 h-6 text-cyan-400" />,
-      features: [
-        "Automação de reconciliação financeira e faturação",
-        "Sincronização contínua de dados entre sistemas legados",
-        "Chatbots inteligentes para atendimento ao cliente no WhatsApp",
-        "Processamento automático de documentos e OCR"
-      ],
-      deliverables: ["Mapeamento de Processos", "Desenvolvimento dos Bots", "Treinamento de Equipa"]
-    },
-    {
-      id: "seguranca",
-      title: "Cibersegurança & Conformidade",
-      tagline: "Proteção de Dados e Resiliência Operacional",
-      desc: "Blindamos a sua infraestrutura com testes de penetração, conformidade com RGPD/LPDD local e encriptação avançada para mitigar riscos corporativos.",
-      icon: <Lock className="w-6 h-6 text-cyan-400" />,
-      features: [
-        "Testes de Invasão (PenTesting) em sistemas e redes",
-        "Implementação de políticas de Zero Trust e Gestão de Acessos",
-        "Monitorização proativa de ameaças em tempo real",
-        "Conformidade com os padrões regulatórios do BNA e AGT"
-      ],
-      deliverables: ["Relatório de Vulnerabilidades", "Mitigação de Riscos", "Certificação de Segurança"]
-    },
-    {
-      id: "cloud",
-      title: "Infraestrutura Cloud & DevOps",
-      tagline: "Automação de Pipelines e Gestão de Servidores",
-      desc: "Configuramos servidores, esteiras CI/CD e monitorização contínua para garantir que os seus sistemas fiquem online 24/7 com disponibilidade máxima.",
-      icon: <Database className="w-6 h-6 text-cyan-400" />,
-      features: [
-        "Deploy automatizado com Docker e Kubernetes",
-        "Configuração de Nginx, PHP-FPM, PostgreSQL e Redis",
-        "Sistemas de Alerta e Telemetria em Tempo Real (Grafana)",
-        "Otimização de custos de infraestrutura em nuvem"
-      ],
-      deliverables: ["Ambientes Staging/Production", "Pipelines CI/CD", "Documentação do Servidor"]
-    }
-  ];
-
-  const portfolioCases = [
-    {
-      tag: "ERP • LOGÍSTICA • LUANDA",
-      title: "Kwanza Logistics OS",
-      desc: "Plataforma integrada de gestão logística para operador em Luanda com automação fiscal AGT e controlo multi-armazém.",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-      stats: "+45% Eficiência Operacional"
-    },
-    {
-      tag: "MOBILE • FINTECH • ANGOLA",
-      title: "Kamba Pay",
-      desc: "Aplicação de pagamentos digitais em Kwanzas com integração Multicaixa Express e verificação KYC em conformidade com BNA.",
-      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80",
-      stats: "200k+ Transações/mês"
-    },
-    {
-      tag: "WEB • SAAS • BENGUELA",
-      title: "AgroTrade Hub",
-      desc: "Mercado digital agrícola que conecta produtores regionais a grandes redes de distribuição com carteira integrada.",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
-      stats: "12+ Províncias Atendidas"
-    },
-    {
-      tag: "AUTOMAÇÃO • SAÚDE • LUANDA",
-      title: "LIMS Labos OS",
-      desc: "Sistema de triagem e gestão laboratorial com agendamento online, notificações em tempo real e relatórios automatizados.",
-      image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=800&q=80",
-      stats: "Redução de 60% na Espera"
-    }
-  ];
-
-  const whyChooseUs = [
-    {
-      title: "Redução de Custos",
-      desc: "Automatizamos processos manuais e reduzimos despesas operacionais em até 60% através de software eficiente.",
-      icon: <BarChart3 className="w-5 h-5 text-cyan-400" />
-    },
-    {
-      title: "Impulso na Produtividade",
-      desc: "Equipas até 3 vezes mais ágeis com sistemas centralizados e fluxos de trabalho desobstruídos.",
-      icon: <Zap className="w-5 h-5 text-cyan-400" />
-    },
-    {
-      title: "Escalabilidade Real",
-      desc: "Arquiteturas cloud-native prontas para crescer em volume de utilizadores e dados sem perda de velocidade.",
-      icon: <Globe className="w-5 h-5 text-cyan-400" />
-    },
-    {
-      title: "Soluções 100% Personalizadas",
-      desc: "Sem modelos genéricos: cada sistema é projetado do zero para responder ao contexto do seu negócio.",
-      icon: <Code2 className="w-5 h-5 text-cyan-400" />
-    },
-    {
-      title: "Segurança de Nível Corporativo",
-      desc: "Normas de proteção de dados, encriptação ponta a ponta e auditorias contínuas contra vulnerabilidades.",
-      icon: <Lock className="w-5 h-5 text-cyan-400" />
-    },
-    {
-      title: "Suporte Técnico Dedicado",
-      desc: "Squad técnico qualificado com acordos de nível de serviço (SLA) e canal direto via WhatsApp/Telefone.",
-      icon: <Phone className="w-5 h-5 text-cyan-400" />
-    }
-  ];
-
-  const faqs = [
-    {
-      q: "Como funciona o processo de início de um projeto com a ZUTIC?",
-      a: "Começamos por uma reunião de alinhamento para compreender as suas necessidades de negócio. Em seguida, elaboramos uma proposta técnica e comercial detalhada com prazos e entregáveis bem definidos."
-    },
-    {
-      q: "A ZUTIC oferece suporte após o lançamento do projeto?",
-      a: "Sim. Todos os nossos projetos incluem um período de garantia de bugs e a opção de planos de manutenção preventiva, suporte contínuo e evolução do software."
-    },
-    {
-      q: "As soluções desenvolvidas são integradas com sistemas locais de Angola?",
-      a: "Com certeza. Desenvolvemos integrações nativas com o sistema de faturação certificado da AGT, gateway do Multicaixa Express e APIs bancárias locais."
-    },
-    {
-      q: "Quanto tempo demora o desenvolvimento de um MVP?",
-      a: "A versão mínima funcional (MVP) é desenhada para rápida entrada no mercado, variando habitualmente entre 4 a 8 semanas, consoante a complexidade das funcionalidades."
-    }
-  ];
+      return matchesCategory && (!query || searchableContent.includes(query));
+    });
+  }, [searchTerm, selectedCategory]);
 
   return (
-    <div className="relative">
-      
-      {/* ESTILO DA ANIMAÇÃO INFINITA DO CARROSSEL */}
-      <style>{`
-        @keyframes infiniteScroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-infinite-scroll {
-          display: flex;
-          width: max-content;
-          animation: infiniteScroll 25s linear infinite;
-        }
-        .animate-infinite-scroll:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
-
-      {/* GLOWS EM MOVIMENTAÇÃO / AMBIENTES DINÂMICOS */}
-      <div 
-        className="pointer-events-none fixed -top-40 -left-40 w-[600px] h-[600px] bg-gradient-to-br from-cyan-500/15 via-blue-600/10 to-transparent rounded-full blur-[140px] transition-transform duration-1000 ease-out z-0"
-        style={{
-          transform: `translate(${mousePos.x * 0.03}px, ${mousePos.y * 0.03}px)`
-        }}
-      />
-      <div 
-        className="pointer-events-none fixed top-1/2 -right-40 w-[700px] h-[700px] bg-gradient-to-tl from-blue-600/15 via-cyan-400/10 to-transparent rounded-full blur-[160px] transition-transform duration-1000 ease-out z-0"
-        style={{
-          transform: `translate(${-mousePos.x * 0.02}px, ${-mousePos.y * 0.02}px)`
-        }}
-      />
-
-      {/* HERO SECTION */}
+    <main>
       <section
         id="inicio"
-        aria-label="Destaques da ZUTIC"
-        className="relative z-10 flex min-h-[calc(100svh-5rem)] items-center overflow-hidden"
+        aria-labelledby="home-title"
+        className="home-hero relative isolate flex min-h-[410px] items-center overflow-hidden bg-[#06142e] sm:min-h-[790px]"
       >
-        <div aria-hidden="true" className="absolute inset-0">
-          {heroSlides.map((slide, index) => (
-            <div
-              key={slide.image}
-              className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 motion-reduce:transition-none ${
-                index === currentHeroSlide ? "opacity-100" : "opacity-0"
-              }`}
-              style={{ backgroundImage: `url("${slide.image}")` }}
-            />
-          ))}
-          <div className="theme-home-overlay theme-home-overlay-vertical absolute inset-0 bg-gradient-to-b from-[#07090e]/75 via-[#07090e]/75 to-[#07090e]" />
-          <div className="theme-home-overlay theme-home-overlay-horizontal absolute inset-0 bg-gradient-to-r from-[#07090e]/60 via-transparent to-[#07090e]/60" />
-        </div>
-
-        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[150px]" />
-
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-16 text-left sm:px-6 sm:py-20 lg:px-8">
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-950/60 px-4 py-1.5 text-xs font-semibold text-cyan-300 backdrop-blur-md">
-            <span className="h-2 w-2 animate-ping rounded-full bg-cyan-400" />
-            {heroSlides[currentHeroSlide].eyebrow}
-          </div>
-
-          <h1 className="mb-6 max-w-4xl text-4xl font-black leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl">
-            {heroSlides[currentHeroSlide].title}{" "}
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-300 bg-clip-text text-transparent">
-              {heroSlides[currentHeroSlide].highlight}
+        <div aria-hidden="true" className="home-hero-grid absolute inset-0" />
+        <div aria-hidden="true" className="absolute -left-32 top-8 h-80 w-80 rounded-full bg-blue-500/20 blur-[120px]" />
+        <div aria-hidden="true" className="absolute -right-24 top-0 h-96 w-96 rounded-full bg-cyan-400/10 blur-[130px]" />
+        <div className="relative z-10 mx-auto w-full max-w-5xl px-4 py-16 text-center sm:px-6 lg:px-8">
+          <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-300/25 bg-blue-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-200">
+            <span className="h-2 w-2 rounded-full bg-cyan-300" />
+            Tecnologia e software em Angola
+          </span>
+          <h1 id="home-title" className="mx-auto max-w-4xl text-4xl font-black leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
+            Tecnologia para impulsionar{" "}
+            <span className="bg-gradient-to-r from-cyan-300 via-blue-300 to-sky-400 bg-clip-text text-transparent">
+              o seu negócio.
             </span>
           </h1>
-
-          <p className="mb-10 max-w-2xl text-base font-normal leading-relaxed text-slate-300 sm:text-xl">
-            {heroSlides[currentHeroSlide].description}
+          <p className="home-hero-copy mx-auto mt-5 max-w-2xl text-sm leading-relaxed sm:text-base">
+            Desenvolvemos software à medida, aplicações e soluções tecnológicas para ajudar a sua empresa a crescer.
           </p>
-
-          <div className="flex flex-col items-start gap-4 sm:flex-row">
-            <a
-              href="#contactos"
-              className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-8 py-4 text-sm font-bold text-slate-950 transition-all hover:shadow-lg hover:shadow-cyan-500/25 sm:w-auto"
-            >
-              Falar com a Equipa <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </a>
-            <a
-              href="#portfolio"
-              className="w-full rounded-xl border border-cyan-900/50 bg-[#0d121f]/80 px-8 py-4 text-sm font-semibold text-slate-200 transition-all hover:border-cyan-500/50 sm:w-auto"
-            >
-              Ver Casos de Sucesso
-            </a>
-          </div>
-
-          <div className="mt-10 flex items-center justify-start gap-3">
-            <button
-              type="button"
-              onClick={() => setCurrentHeroSlide((current) => (current - 1 + heroSlides.length) % heroSlides.length)}
-              className="rounded-full border border-cyan-500/30 bg-[#0b0f19]/80 p-2 text-cyan-300 transition-colors hover:bg-cyan-950"
-              aria-label="Slide anterior"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </button>
-            {heroSlides.map((slide, index) => (
-              <button
-                key={slide.image}
-                type="button"
-                onClick={() => setCurrentHeroSlide(index)}
-                className={`h-2.5 rounded-full transition-all ${
-                  index === currentHeroSlide ? "w-8 bg-cyan-400" : "w-2.5 bg-slate-500 hover:bg-cyan-300"
-                }`}
-                aria-label={`Ver slide ${index + 1}`}
-                aria-pressed={index === currentHeroSlide}
-              />
-            ))}
-            <button
-              type="button"
-              onClick={() => setCurrentHeroSlide((current) => (current + 1) % heroSlides.length)}
-              className="rounded-full border border-cyan-500/30 bg-[#0b0f19]/80 p-2 text-cyan-300 transition-colors hover:bg-cyan-950"
-              aria-label="Próximo slide"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </button>
-            <button
-              type="button"
-              onClick={() => setIsHeroSlideshowPaused((paused) => !paused)}
-              className="rounded-full border border-cyan-500/30 bg-[#0b0f19]/80 p-2 text-cyan-300 transition-colors hover:bg-cyan-950"
-              aria-label={isHeroSlideshowPaused ? "Retomar apresentação" : "Pausar apresentação"}
-              aria-pressed={isHeroSlideshowPaused}
-            >
-              {isHeroSlideshowPaused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
-            </button>
-          </div>
+          <Link
+            href="/sobre"
+            className="mt-7 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-blue-950/30 transition-colors hover:bg-blue-500"
+          >
+            Saber mais <ArrowRight className="h-4 w-4" />
+          </Link>
+          <a
+            href="#servicos"
+            aria-label="Explorar serviços"
+            className="mx-auto mt-7 flex w-fit items-center gap-2 text-xs font-medium text-blue-200/80 transition-colors hover:text-white"
+          >
+            Explore as nossas soluções <ArrowDown className="h-4 w-4" />
+          </a>
         </div>
+        <svg
+          aria-hidden="true"
+          className="hero-wave hero-wave-back absolute -bottom-px -left-[5%] h-12 w-[110%] sm:h-16"
+          viewBox="0 0 1440 100"
+          preserveAspectRatio="none"
+        >
+          <path d="M0,55 C220,100 390,10 650,45 C900,80 1120,5 1440,45 L1440,100 L0,100 Z" fill="#eff6ff" />
+        </svg>
+        <svg
+          aria-hidden="true"
+          className="hero-wave hero-wave-front absolute -bottom-px -left-[5%] h-12 w-[110%] sm:h-16"
+          viewBox="0 0 1440 100"
+          preserveAspectRatio="none"
+        >
+          <path d="M0,72 C250,30 460,110 720,65 C980,25 1210,80 1440,35 L1440,100 L0,100 Z" fill="#ffffff" />
+        </svg>
       </section>
 
-      {/* CARROSSEL INFINITO DE IMAGENS DOS PARCEIROS */}
-      <section id="parceiros" className="py-12 border-y border-cyan-900/30 bg-[#0b0f19]/60 backdrop-blur-md relative z-10 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-6">
-          <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-cyan-500/70">
-            NOSSOS PARCEIROS ESTRATÉGICOS
-          </p>
-        </div>
-
-        {/* Máscara de degradê nas bordas para suavizar a entrada/saída do carrossel */}
-        <div className="relative w-full overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
-          <div className="animate-infinite-scroll flex items-center gap-12 sm:gap-16 py-2">
-            
-            {/* Primeira reprodução da lista de parceiros */}
-            {partnerLogos.map((p, idx) => (
-              <div 
-                key={`p1-${idx}`} 
-                className="flex-shrink-0 w-36 h-20 bg-[#07090e] border border-cyan-900/30 rounded-2xl p-3 flex items-center justify-center opacity-70 hover:opacity-100 hover:border-cyan-500/50 transition-all cursor-pointer group shadow-lg"
-              >
-                <img 
-                  src={p.logo} 
-                  alt={p.name} 
-                  className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300" 
-                />
-              </div>
-            ))}
-
-            {/* Duplicação exata da lista para efeito contínuo sem emendas */}
-            {partnerLogos.map((p, idx) => (
-              <div 
-                key={`p2-${idx}`} 
-                className="flex-shrink-0 w-36 h-20 bg-[#07090e] border border-cyan-900/30 rounded-2xl p-3 flex items-center justify-center opacity-70 hover:opacity-100 hover:border-cyan-500/50 transition-all cursor-pointer group shadow-lg"
-              >
-                <img 
-                  src={p.logo} 
-                  alt={p.name} 
-                  className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300" 
-                />
-              </div>
-            ))}
-
-          </div>
-        </div>
+      <section aria-label="Pesquisar serviços" className="relative z-20 -mt-2 bg-white px-4 pb-4 sm:px-6">
+        <form
+          onSubmit={(event) => event.preventDefault()}
+          className="mx-auto flex max-w-2xl items-center gap-3 rounded-2xl border border-blue-100 bg-white p-2 shadow-lg shadow-blue-950/10"
+        >
+          <Search className="ml-3 h-5 w-5 shrink-0 text-blue-500" />
+          <label htmlFor="service-search" className="sr-only">Pesquisar serviços</label>
+          <input
+            id="service-search"
+            type="search"
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+            placeholder="Procura software, aplicações, consultoria..."
+            className="min-w-0 flex-1 bg-transparent py-2 text-sm text-slate-800 outline-none placeholder:text-slate-400"
+          />
+          {searchTerm && (
+            <button
+              type="button"
+              onClick={() => setSearchTerm("")}
+              aria-label="Limpar pesquisa"
+              className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-blue-50 hover:text-blue-600"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          )}
+          <button
+            type="submit"
+            className="shrink-0 rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-bold text-white transition-colors hover:bg-blue-500 sm:px-5"
+          >
+            Pesquisar
+          </button>
+        </form>
       </section>
 
-      {/* SEÇÃO WHY ZUTIC */}
-      <section className="py-24 relative z-10">
-        <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-cyan-500/10 blur-[160px] rounded-full pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-cyan-400 text-xs font-bold uppercase tracking-[0.2em] block mb-3">PORQUÊ A ZUTIC</span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
-              Resultados Mensuráveis.<br />
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Crescimento Exponencial.</span>
+      <section id="servicos" aria-labelledby="services-title" className="bg-white py-14 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto mb-8 max-w-2xl text-center">
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">
+              Soluções ZUTIC
+            </span>
+            <h2 id="services-title" className="mt-3 text-3xl font-extrabold text-blue-950 sm:text-4xl">
+              Soluções tecnológicas para{" "}
+              <span className="text-blue-600">o seu negócio.</span>
             </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-cyan-900/30 rounded-3xl overflow-hidden border border-cyan-900/40 shadow-2xl">
-            {whyChooseUs.map((item, idx) => (
-              <div 
-                key={idx} 
-                className="bg-[#0b0f19] p-8 hover:bg-[#0f1524] transition-all duration-300 flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="w-10 h-10 rounded-xl bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    {item.icon}
-                  </div>
-                  <h3 className="text-lg font-bold mb-3 text-slate-100 group-hover:text-cyan-300 transition-colors">{item.title}</h3>
-                  <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SERVIÇOS & SOLUÇÕES */}
-      <section id="servicos" className="py-24 bg-[#0b0f19]/40 border-y border-cyan-900/30 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-cyan-400 text-xs font-bold uppercase tracking-[0.2em] block mb-3">O QUE FAZEMOS</span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
-              Soluções Digitais <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">End-to-End.</span>
-            </h2>
-            <p className="text-slate-400 text-base">
-              Do conceito inicial à implementação em produção, cobrimos todo o ciclo de vida de desenvolvimento do seu software.
+            <p className="mt-3 text-sm leading-relaxed text-slate-600">
+              Explore as nossas áreas de atuação e encontre o apoio certo para o próximo passo da sua empresa.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((s) => (
-              <div 
-                key={s.id}
-                onClick={() => setSelectedService(s)}
-                className="bg-[#0b0f19] border border-cyan-900/40 hover:border-cyan-500/50 rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/10 cursor-pointer group flex flex-col justify-between relative overflow-hidden"
+          <div className="mb-9 flex flex-wrap justify-center gap-2">
+            {serviceCategories.map((category) => (
+              <button
+                key={category.id}
+                type="button"
+                onClick={() => setSelectedCategory(category.id)}
+                aria-pressed={selectedCategory === category.id}
+                className={`rounded-full border px-4 py-2 text-xs font-semibold transition-colors ${
+                  selectedCategory === category.id
+                    ? "border-blue-600 bg-blue-600 text-white"
+                    : "border-blue-100 bg-white text-slate-600 hover:border-blue-300 hover:text-blue-700"
+                }`}
               >
-                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-cyan-500/10 to-transparent rounded-bl-full pointer-events-none group-hover:from-cyan-500/20 transition-all"></div>
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center mb-6">
-                    {s.icon}
-                  </div>
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-cyan-300 transition-colors">{s.title}</h3>
-                  <p className="text-xs text-cyan-400/80 font-medium mb-4">{s.tagline}</p>
-                  <p className="text-slate-400 text-sm leading-relaxed mb-6">{s.desc}</p>
-                </div>
-                <div className="flex items-center gap-2 text-cyan-400 font-bold text-xs uppercase tracking-wider group-hover:translate-x-1 transition-transform">
-                  <span>Ver Detalhes do Serviço</span> <ArrowUpRight className="w-4 h-4" />
-                </div>
-              </div>
+                {category.label}
+              </button>
             ))}
           </div>
 
+          {filteredServices.length > 0 ? (
+            <div className="space-y-5">
+              {filteredServices.map((service, index) => (
+                <article
+                  key={service.id}
+                  className="rounded-3xl border border-blue-100 bg-white p-6 shadow-sm shadow-blue-950/5 transition-shadow hover:shadow-lg hover:shadow-blue-950/10 sm:p-8 lg:p-9"
+                >
+                  <div className="grid gap-7 lg:grid-cols-2 lg:items-center lg:gap-12">
+                    <div className={index % 2 === 1 ? "lg:order-2" : undefined}>
+                      <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 text-white shadow-md shadow-blue-500/20">
+                        {service.icon}
+                      </div>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-blue-500">
+                        {service.tagline}
+                      </p>
+                      <h3 className="mt-2 text-xl font-bold text-blue-950 sm:text-2xl">
+                        {service.title}
+                      </h3>
+                      <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-600">
+                        {service.desc}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => setSelectedService(service)}
+                        className="mt-5 inline-flex items-center gap-2 rounded-lg border border-blue-200 px-4 py-2.5 text-xs font-bold text-blue-700 transition-colors hover:border-blue-600 hover:bg-blue-50"
+                      >
+                        Ver detalhes <ArrowRight className="h-4 w-4" />
+                      </button>
+                    </div>
+                    <ul
+                      className={`grid gap-x-5 gap-y-4 rounded-2xl border border-blue-100 bg-blue-50/60 p-5 sm:grid-cols-2 sm:p-6 ${
+                        index % 2 === 1 ? "lg:order-1" : ""
+                      }`}
+                    >
+                      {service.features.map((feature) => (
+                        <li key={feature} className="flex items-start gap-2.5 text-xs leading-relaxed text-slate-700 sm:text-sm">
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-2xl border border-blue-100 bg-blue-50/60 px-6 py-12 text-center">
+              <Search className="mx-auto h-8 w-8 text-blue-400" />
+              <h3 className="mt-3 font-bold text-blue-950">Não encontrámos serviços</h3>
+              <p className="mt-1 text-sm text-slate-600">Experimente outros termos ou escolha outra categoria.</p>
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchTerm("");
+                  setSelectedCategory("todos");
+                }}
+                className="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800"
+              >
+                Limpar filtros
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* MODAL DETALHADO DE SERVIÇO */}
       {selectedService && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-          <div className="bg-[#0b0f19] border border-cyan-500/40 rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 relative shadow-2xl animate-in fade-in zoom-in-95">
-            
-            <button 
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-blue-950/40 p-4 backdrop-blur-sm"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setSelectedService(null);
+          }}
+        >
+          <section
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="service-dialog-title"
+            className="relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-3xl border border-blue-100 bg-white p-6 shadow-2xl sm:p-8"
+          >
+            <button
+              type="button"
               onClick={() => setSelectedService(null)}
-              className="absolute top-6 right-6 p-2 rounded-full bg-cyan-950 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-900 transition-colors"
+              aria-label="Fechar detalhes do serviço"
+              className="absolute right-5 top-5 rounded-full p-2 text-slate-500 transition-colors hover:bg-blue-50 hover:text-blue-700"
             >
-              <X className="w-5 h-5" />
+              <X className="h-5 w-5" />
             </button>
-
-            <div className="inline-block px-3 py-1 rounded-full bg-cyan-950 text-cyan-400 text-xs font-bold border border-cyan-500/30 mb-4">
-              SOBRE ESTE SERVIÇO
-            </div>
-
-            <h3 className="text-2xl sm:text-3xl font-extrabold mb-2">{selectedService.title}</h3>
-            <p className="text-cyan-400 text-sm font-semibold mb-6">{selectedService.tagline}</p>
-            <p className="text-slate-300 text-sm leading-relaxed mb-8">{selectedService.desc}</p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <div className="bg-[#07090e] p-5 rounded-2xl border border-cyan-900/40">
-                <h4 className="font-bold text-sm text-slate-100 mb-4 flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-cyan-400" /> O que está incluído
-                </h4>
+            <span className="inline-flex rounded-full bg-blue-50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-blue-700">
+              Serviço ZUTIC
+            </span>
+            <h2 id="service-dialog-title" className="mt-4 pr-10 text-2xl font-extrabold text-blue-950 sm:text-3xl">
+              {selectedService.title}
+            </h2>
+            <p className="mt-2 text-sm font-semibold text-blue-600">{selectedService.tagline}</p>
+            <p className="mt-4 text-sm leading-relaxed text-slate-600">{selectedService.desc}</p>
+            <div className="mt-7 grid gap-4 sm:grid-cols-2">
+              <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-5">
+                <h3 className="mb-4 flex items-center gap-2 text-sm font-bold text-blue-950">
+                  <CheckCircle2 className="h-4 w-4 text-blue-600" /> O que está incluído
+                </h3>
                 <ul className="space-y-3">
-                  {selectedService.features.map((f, i) => (
-                    <li key={i} className="text-xs text-slate-300 flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 mt-1.5" />
-                      {f}
+                  {selectedService.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-2 text-xs leading-relaxed text-slate-700">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-600" />
+                      {feature}
                     </li>
                   ))}
                 </ul>
               </div>
-
-              <div className="bg-[#07090e] p-5 rounded-2xl border border-cyan-900/40">
-                <h4 className="font-bold text-sm text-slate-100 mb-4 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-cyan-400" /> Entregáveis
-                </h4>
-                <div className="space-y-3">
-                  {selectedService.deliverables.map((d, i) => (
-                    <div key={i} className="flex items-center gap-3">
-                      <span className="w-5 h-5 rounded-full bg-cyan-950 text-cyan-400 text-[10px] font-bold flex items-center justify-center border border-cyan-500/30">
-                        {i + 1}
+              <div className="rounded-2xl border border-blue-100 bg-white p-5">
+                <h3 className="mb-4 flex items-center gap-2 text-sm font-bold text-blue-950">
+                  <Sparkles className="h-4 w-4 text-blue-600" /> Etapas e entregáveis
+                </h3>
+                <ol className="space-y-3">
+                  {selectedService.deliverables.map((deliverable, index) => (
+                    <li key={deliverable} className="flex items-center gap-3 text-xs text-slate-700">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-50 text-[10px] font-bold text-blue-700">
+                        {index + 1}
                       </span>
-                      <span className="text-xs text-slate-300">{d}</span>
-                    </div>
+                      {deliverable}
+                    </li>
                   ))}
-                </div>
+                </ol>
               </div>
             </div>
-
-            <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-cyan-900/30">
-              <a 
-                href="#contactos" 
-                onClick={() => setSelectedService(null)}
-                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold text-xs text-center"
-              >
-                Solicitar Proposta para este Serviço
-              </a>
-              <button 
-                onClick={() => setSelectedService(null)}
-                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#0d121f] text-slate-300 text-xs font-semibold hover:bg-slate-800"
-              >
-                Fechar
-              </button>
-            </div>
-
-          </div>
+            <Link
+              href="/contactos"
+              className="mt-7 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-blue-500"
+            >
+              Pedir proposta <ArrowRight className="h-4 w-4" />
+            </Link>
+          </section>
         </div>
       )}
 
-      {/* PORTEFÓLIO */}
-      <section id="portfolio" className="py-24 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
-            <div>
-              <span className="text-cyan-400 text-xs font-bold uppercase tracking-[0.2em] block mb-3">PORTEFÓLIO</span>
-              <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
-                Projetos que <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">falam por nós.</span>
-              </h2>
-            </div>
-            <p className="text-slate-400 text-sm max-w-md mt-4 md:mt-0">
-              Uma seleção de soluções desenvolvidas para empresas que procuram excelência técnica e impacto real.
+      <section id="processo" aria-labelledby="process-title" className="border-y border-blue-100 bg-blue-50/80 py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto mb-10 max-w-2xl text-center">
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">
+              Do primeiro contacto à entrega
+            </span>
+            <h2 id="process-title" className="mt-3 text-3xl font-extrabold text-blue-950 sm:text-4xl">
+              Como apoiamos a sua empresa em 4 passos
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-slate-600">
+              Um processo claro e colaborativo para desenvolver soluções alinhadas com as suas necessidades.
             </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {portfolioCases.map((c, idx) => (
-              <div 
-                key={idx}
-                className="bg-[#0b0f19] border border-cyan-900/40 rounded-3xl overflow-hidden group hover:border-cyan-500/50 transition-all duration-300 flex flex-col justify-between"
-              >
-                <div className="relative h-64 overflow-hidden">
-                  <img 
-                    src={c.image} 
-                    alt={c.title} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0b0f19] via-[#0b0f19]/30 to-transparent"></div>
-                  
-                  <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-cyan-950/80 backdrop-blur-md text-cyan-300 text-[10px] font-bold border border-cyan-500/30 uppercase tracking-wider">
-                    {c.tag}
-                  </div>
-
-                  <div className="absolute bottom-4 right-4 px-3 py-1 rounded-lg bg-cyan-500 text-slate-950 text-xs font-black">
-                    {c.stats}
-                  </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {processSteps.map(({ number, title, description, icon: Icon }) => (
+              <article key={number} className="rounded-2xl border border-blue-100 bg-white p-5 shadow-sm shadow-blue-950/5 sm:p-6">
+                <div className="mb-5 flex items-center justify-between">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <span className="font-mono text-xs font-bold text-blue-400">{number}</span>
                 </div>
-
-                <div className="p-8">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-2xl font-bold group-hover:text-cyan-300 transition-colors">{c.title}</h3>
-                    <div className="w-8 h-8 rounded-full bg-cyan-950 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform">
-                      <ArrowUpRight className="w-4 h-4" />
-                    </div>
-                  </div>
-                  <p className="text-slate-400 text-sm leading-relaxed">{c.desc}</p>
-                </div>
-              </div>
+                <h3 className="text-sm font-bold text-blue-950">{title}</h3>
+                <p className="mt-2 text-xs leading-relaxed text-slate-600">{description}</p>
+              </article>
             ))}
           </div>
-
         </div>
       </section>
 
-      {/* CTA INTERMEDIÁRIO */}
-      <section className="py-16 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative bg-gradient-to-r from-[#0b0f19] via-[#0f172a] to-[#0b0f19] border border-cyan-500/40 rounded-3xl p-8 sm:p-14 overflow-hidden shadow-2xl">
-            
-            <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-cyan-500/20 blur-[100px] rounded-full pointer-events-none" />
+      <section aria-labelledby="commitments-title" className="bg-white py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto mb-10 max-w-2xl text-center">
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">
+              A confiança constrói-se em conjunto
+            </span>
+            <h2 id="commitments-title" className="mt-3 text-3xl font-extrabold text-blue-950 sm:text-4xl">
+              O compromisso da ZUTIC
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-slate-600">
+              Princípios que orientam a nossa colaboração em cada projeto.
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {commitments.map(({ title, description, icon: Icon }) => (
+              <article key={title} className="rounded-2xl border border-blue-100 bg-white p-6 shadow-sm shadow-blue-950/5 sm:p-7">
+                <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <h3 className="text-base font-bold text-blue-950">{title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-slate-600">{description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
 
-            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-              <div className="max-w-xl">
-                <h3 className="text-2xl sm:text-4xl font-extrabold mb-4">
-                  Pronto para escalar com tecnologia que entrega resultados?
+      <section id="faq" aria-labelledby="faq-title" className="border-y border-blue-100 bg-blue-50/70 py-16 sm:py-20">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-9 text-center">
+            <span className="inline-flex rounded-full border border-blue-200 bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-blue-600">
+              Perguntas frequentes
+            </span>
+            <h2 id="faq-title" className="mt-4 text-3xl font-extrabold text-blue-950 sm:text-4xl">
+              Respostas claras para as suas dúvidas
+            </h2>
+            <p className="mt-3 text-sm text-slate-600">
+              Saiba mais sobre como trabalhamos e como iniciar o seu projeto.
+            </p>
+          </div>
+          <div className="space-y-3">
+            {faqs.map((faq, index) => (
+              <article
+                key={faq.q}
+                className={`overflow-hidden rounded-2xl border bg-white transition-colors ${
+                  openFaq === index ? "border-blue-300 shadow-sm shadow-blue-950/5" : "border-blue-100"
+                }`}
+              >
+                <h3>
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                    aria-expanded={openFaq === index}
+                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-sm font-bold text-blue-950 sm:px-6"
+                  >
+                    {faq.q}
+                    <ChevronDown className={`h-4 w-4 shrink-0 text-blue-600 transition-transform ${openFaq === index ? "rotate-180" : ""}`} />
+                  </button>
                 </h3>
-                <p className="text-slate-400 text-sm">
-                  Agende uma consulta técnica gratuita com a nossa equipa de arquitetos de software.
-                </p>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4 shrink-0">
-                <a href="#contactos" 
-                  className="px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold text-sm shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all text-center"
-                >
-                  Falar Connosco Agora
-                </a>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ SECTION */}
-      <section id="faq" className="py-24 bg-[#0b0f19]/40 border-t border-cyan-900/30 relative z-10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center mb-16">
-            <span className="text-cyan-400 text-xs font-bold uppercase tracking-[0.2em] block mb-3">PERGUNTAS FREQUENTES</span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold">Tire as suas dúvidas.</h2>
-          </div>
-
-          <div className="space-y-4">
-            {faqs.map((faq, idx) => (
-              <div 
-                key={idx}
-                className="bg-[#0b0f19] border border-cyan-900/40 rounded-2xl overflow-hidden transition-colors"
-              >
-                <button 
-                  onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  className="w-full p-6 text-left flex items-center justify-between font-bold text-base text-slate-200 hover:text-cyan-400 transition-colors"
-                >
-                  <span>{faq.q}</span>
-                  <ChevronDown className={`w-5 h-5 text-cyan-400 transition-transform duration-300 ${openFaq === idx ? 'rotate-180' : ''}`} />
-                </button>
-                {openFaq === idx && (
-                  <div className="px-6 pb-6 text-sm text-slate-400 leading-relaxed border-t border-cyan-900/20 pt-4 animate-in fade-in">
+                {openFaq === index && (
+                  <p className="border-t border-blue-100 px-5 pb-5 pt-4 text-sm leading-relaxed text-slate-600 sm:px-6">
                     {faq.a}
-                  </div>
+                  </p>
                 )}
-              </div>
+              </article>
             ))}
           </div>
-
         </div>
       </section>
 
-      {/* WHATSAPP FLUTUANTE */}
-      <div className="fixed bottom-6 right-6 z-50">
-        <a 
-          href="https://wa.me/244900000000" 
-          target="_blank" 
+      <section className="bg-white px-4 py-16 sm:px-6 sm:py-20">
+        <div className="home-cta-panel relative mx-auto max-w-5xl overflow-hidden rounded-3xl border border-blue-800/50 bg-[#06142e] p-7 shadow-xl shadow-blue-950/15 sm:p-10 lg:p-12">
+          <div aria-hidden="true" className="home-hero-grid absolute inset-0 opacity-40" />
+          <div aria-hidden="true" className="absolute -right-24 -top-32 h-80 w-80 rounded-full bg-blue-500/25 blur-[100px]" />
+          <div className="relative grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-blue-200">
+                Vamos conversar?
+              </span>
+              <h2 className="mt-3 text-2xl font-extrabold text-white sm:text-3xl">
+                Pronto para modernizar o seu negócio?
+              </h2>
+              <p className="mt-3 max-w-xl text-sm leading-relaxed text-blue-100/80">
+                Partilhe o seu desafio connosco e descubra como a tecnologia pode apoiar os seus objetivos.
+              </p>
+            </div>
+            <div className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
+              <p className="text-sm font-bold text-white">Contacto comercial</p>
+              <p className="text-xs leading-relaxed text-blue-100/70">
+                A nossa equipa está disponível para ouvir as suas necessidades e orientar os próximos passos.
+              </p>
+              <Link
+                href="/contactos"
+                className="mt-1 inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-blue-500"
+              >
+                Falar com a ZUTIC <ArrowUpRight className="h-4 w-4" />
+              </Link>
+              <a
+                href="https://wa.me/244900000000"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 px-5 py-3 text-sm font-semibold text-blue-100 transition-colors hover:bg-white/10"
+              >
+                <MessageSquare className="h-4 w-4" /> Conversar no WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="fixed bottom-6 right-6 z-40">
+        <a
+          href="https://wa.me/244900000000"
+          target="_blank"
           rel="noopener noreferrer"
-          className="relative group flex items-center justify-center w-14 h-14 bg-emerald-500 text-slate-950 rounded-full shadow-2xl hover:scale-110 transition-transform"
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-600 text-white shadow-xl shadow-blue-900/25 transition-transform hover:scale-110"
           aria-label="Atendimento via WhatsApp"
         >
-          <span className="absolute -inset-1 bg-emerald-500 rounded-full blur opacity-70 group-hover:opacity-100 animate-pulse"></span>
-          <MessageSquare className="w-7 h-7 relative z-10" />
+          <MessageSquare className="relative z-10 h-6 w-6" />
         </a>
       </div>
-
-    </div>
+    </main>
   );
 }

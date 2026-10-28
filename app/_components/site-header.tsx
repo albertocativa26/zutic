@@ -3,13 +3,12 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
-import ThemeToggle from "./theme-toggle";
 
 const navigationLinks = [
   { id: "inicio", label: "Início" },
   { id: "servicos", label: "Serviços" },
+  { id: "processo", label: "Processo" },
   { id: "sobre", label: "Sobre" },
-  { id: "portfolio", label: "Portefólio" },
   { id: "contactos", label: "Contactos" },
 ];
 
@@ -17,17 +16,17 @@ export default function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-cyan-900/30 bg-[#07090e]/90 shadow-lg shadow-black/10 backdrop-blur-xl">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-slate-200 bg-white/95 shadow-lg shadow-slate-900/5 backdrop-blur-xl">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Link href="/" className="group flex shrink-0 items-center gap-3">
-            <span className="relative flex items-center gap-1.5 rounded-lg bg-[#0b0f19] px-3.5 py-1.5 text-xl font-black text-cyan-400">
+            <span className="relative flex items-center gap-1.5 rounded-lg bg-blue-50 px-3.5 py-1.5 text-xl font-black text-blue-600">
               ZUTIC
           </span>
         </Link>
 
         <nav
           aria-label="Navegação principal"
-            className="hidden flex-1 items-center justify-center gap-5 text-[11px] font-semibold uppercase tracking-wider text-slate-300 lg:flex xl:gap-7"
+            className="hidden flex-1 items-center justify-center gap-5 text-[11px] font-semibold uppercase tracking-wider text-slate-600 lg:flex xl:gap-7"
         >
           {navigationLinks.map((link) => (
             <Link
@@ -39,9 +38,11 @@ export default function SiteHeader() {
                     ? "/sobre"
                     : link.id === "servicos"
                       ? "/servicos"
+                      : link.id === "processo"
+                        ? "/#processo"
                       : `/#${link.id}`
               }
-              className="transition-colors hover:text-cyan-400"
+              className="transition-colors hover:text-blue-600"
             >
               {link.label}
             </Link>
@@ -55,12 +56,10 @@ export default function SiteHeader() {
           Fale connosco <ArrowUpRight className="h-4 w-4" />
         </Link>
 
-        <ThemeToggle />
-
         <button
           type="button"
           onClick={() => setMobileMenuOpen((open) => !open)}
-          className="rounded-xl border border-cyan-900/40 bg-[#0d121f] p-2 text-cyan-400 md:hidden"
+          className="rounded-xl border border-blue-200 bg-blue-50 p-2 text-blue-600 md:hidden"
           aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
           aria-expanded={mobileMenuOpen}
           aria-controls="mobile-navigation"
@@ -73,7 +72,7 @@ export default function SiteHeader() {
         <nav
           id="mobile-navigation"
           aria-label="Navegação móvel"
-          className="space-y-2 border-b border-cyan-900/40 bg-[#0b0f19] px-4 pb-6 pt-4 shadow-xl shadow-black/20 md:hidden"
+          className="space-y-2 border-b border-slate-200 bg-white px-4 pb-6 pt-4 shadow-xl shadow-slate-900/10 md:hidden"
         >
           {navigationLinks.map((link) => (
             <Link
@@ -85,10 +84,12 @@ export default function SiteHeader() {
                     ? "/sobre"
                     : link.id === "servicos"
                       ? "/servicos"
+                      : link.id === "processo"
+                        ? "/#processo"
                       : `/#${link.id}`
               }
               onClick={() => setMobileMenuOpen(false)}
-              className="block rounded-lg px-3 py-2.5 text-sm font-medium text-slate-300 transition-colors hover:bg-cyan-950/50 hover:text-cyan-400"
+              className="block rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 transition-colors hover:bg-blue-50 hover:text-blue-600"
             >
               {link.label}
             </Link>
