@@ -8,6 +8,7 @@ const navigationLinks = [
   { id: "inicio", label: "Início" },
   { id: "sobre", label: "A Zutic" },
   { id: "solucoes", label: "Soluções" },
+  { id: "parceiros", label: "Parceiros" },
   { id: "contactos", label: "Contactos" },
 ];
 
@@ -34,7 +35,9 @@ export default function SiteHeader() {
                     ? "/sobre"
                     : link.id === "solucoes"
                       ? "/solucoes"
-                      : link.id === "processo"
+                        : link.id === "parceiros"
+                          ? "/parceiros"
+                        : link.id === "processo"
                         ? "/#processo"
                       : `/#${link.id}`
               }
@@ -68,7 +71,9 @@ export default function SiteHeader() {
                     ? "/sobre"
                     : link.id === "solucoes"
                       ? "/solucoes"
-                      : link.id === "processo"
+                        : link.id === "parceiros"
+                          ? "/parceiros"
+                        : link.id === "processo"
                         ? "/#processo"
                       : `/#${link.id}`
               }

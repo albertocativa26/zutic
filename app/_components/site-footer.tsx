@@ -5,6 +5,7 @@ const navigationLinks = [
   { id: "solucoes", label: "Soluções" },
   { id: "processo", label: "Processo" },
   { id: "sobre", label: "Sobre" },
+  { id: "parceiros", label: "Parceiros" },
   { id: "faq", label: "Perguntas frequentes" },
   { id: "contactos", label: "Contactos" },
 ];
@@ -39,6 +40,8 @@ export default function SiteFooter() {
                           ? "/sobre"
                           : link.id === "solucoes"
                             ? "/solucoes"
+                            : link.id === "parceiros"
+                              ? "/parceiros"
                             : link.id === "processo" || link.id === "faq"
                               ? `/#${link.id}`
                             : `/#${link.id}`

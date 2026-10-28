@@ -4,7 +4,7 @@ import { useState, type FormEvent } from "react";
 import { ArrowUpRight, CheckCircle2, Send } from "lucide-react";
 
 const inputClassName =
-  "w-full rounded-xl border border-cyan-900/50 bg-[#07090e] px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20";
+  "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/15";
 
 export default function ContactForm() {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -33,16 +33,16 @@ export default function ContactForm() {
   return (
     <section
       aria-labelledby="contact-form-title"
-      className="rounded-3xl border border-cyan-900/40 bg-[#0b0f19] p-6 shadow-2xl shadow-black/20 sm:p-8"
+      className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-900/5 sm:p-8"
     >
       <div className="mb-7">
-        <span className="mb-3 block text-xs font-bold uppercase tracking-[0.2em] text-cyan-400">
+        <span className="mb-3 block text-xs font-bold uppercase tracking-[0.2em] text-blue-600">
           Fale connosco
         </span>
-        <h2 id="contact-form-title" className="text-2xl font-bold text-slate-100 sm:text-3xl">
+        <h2 id="contact-form-title" className="text-2xl font-bold text-blue-950 sm:text-3xl">
           Envie-nos uma mensagem
         </h2>
-        <p className="mt-3 text-sm leading-relaxed text-slate-400">
+        <p className="mt-3 text-sm leading-relaxed text-slate-600">
           Conte-nos o que precisa. O seu aplicativo de correio será aberto com a mensagem preparada para enviar.
         </p>
       </div>
@@ -50,9 +50,9 @@ export default function ContactForm() {
       {formSubmitted && (
         <div
           role="status"
-          className="mb-6 flex items-start gap-3 rounded-xl border border-cyan-500/30 bg-cyan-950/50 p-4 text-sm text-cyan-200"
+          className="mb-6 flex items-start gap-3 rounded-xl border border-blue-200 bg-blue-50 p-4 text-sm text-blue-900"
         >
-          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-cyan-400" />
+          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
           <p>
             A mensagem foi preparada. Termine o envio no seu aplicativo de correio.
           </p>
@@ -62,8 +62,8 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="space-y-5">
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
-            <label htmlFor="contact-name" className="mb-2 block text-xs font-semibold text-slate-300">
-              Nome completo <span className="text-cyan-400">*</span>
+            <label htmlFor="contact-name" className="mb-2 block text-xs font-semibold text-slate-700">
+              Nome completo <span className="text-blue-600">*</span>
             </label>
             <input
               id="contact-name"
@@ -75,7 +75,7 @@ export default function ContactForm() {
             />
           </div>
           <div>
-            <label htmlFor="contact-company" className="mb-2 block text-xs font-semibold text-slate-300">
+            <label htmlFor="contact-company" className="mb-2 block text-xs font-semibold text-slate-700">
               Empresa
             </label>
             <input
@@ -87,8 +87,8 @@ export default function ContactForm() {
             />
           </div>
           <div>
-            <label htmlFor="contact-email" className="mb-2 block text-xs font-semibold text-slate-300">
-              E-mail <span className="text-cyan-400">*</span>
+            <label htmlFor="contact-email" className="mb-2 block text-xs font-semibold text-slate-700">
+              E-mail <span className="text-blue-600">*</span>
             </label>
             <input
               id="contact-email"
@@ -101,7 +101,7 @@ export default function ContactForm() {
             />
           </div>
           <div>
-            <label htmlFor="contact-phone" className="mb-2 block text-xs font-semibold text-slate-300">
+            <label htmlFor="contact-phone" className="mb-2 block text-xs font-semibold text-slate-700">
               Telefone / WhatsApp
             </label>
             <input
@@ -116,8 +116,8 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label htmlFor="contact-subject" className="mb-2 block text-xs font-semibold text-slate-300">
-            Assunto <span className="text-cyan-400">*</span>
+          <label htmlFor="contact-subject" className="mb-2 block text-xs font-semibold text-slate-700">
+            Assunto <span className="text-blue-600">*</span>
           </label>
           <select
             id="contact-subject"
@@ -137,8 +137,8 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label htmlFor="contact-message" className="mb-2 block text-xs font-semibold text-slate-300">
-            Como podemos ajudar? <span className="text-cyan-400">*</span>
+          <label htmlFor="contact-message" className="mb-2 block text-xs font-semibold text-slate-700">
+            Como podemos ajudar? <span className="text-blue-600">*</span>
           </label>
           <textarea
             id="contact-message"
@@ -152,7 +152,7 @@ export default function ContactForm() {
 
         <button
           type="submit"
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-4 text-sm font-bold text-slate-950 transition-shadow hover:shadow-lg hover:shadow-cyan-500/25"
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-4 text-sm font-bold text-white transition-colors hover:bg-blue-700"
         >
           <Send className="h-4 w-4" />
           Preparar mensagem
