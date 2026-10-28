@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const navigationLinks = [
   { id: "inicio", label: "Início" },
-  { id: "servicos", label: "Serviços" },
+  { id: "solucoes", label: "Soluções" },
   { id: "processo", label: "Processo" },
   { id: "sobre", label: "Sobre" },
   { id: "faq", label: "Perguntas frequentes" },
@@ -37,8 +37,8 @@ export default function SiteFooter() {
                         ? "/contactos"
                         : link.id === "sobre"
                           ? "/sobre"
-                          : link.id === "servicos"
-                            ? "/servicos"
+                          : link.id === "solucoes"
+                            ? "/solucoes"
                             : link.id === "processo" || link.id === "faq"
                               ? `/#${link.id}`
                             : `/#${link.id}`

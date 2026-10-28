@@ -6,9 +6,8 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 
 const navigationLinks = [
   { id: "inicio", label: "Início" },
-  { id: "servicos", label: "Serviços" },
-  { id: "processo", label: "Processo" },
-  { id: "sobre", label: "Sobre" },
+  { id: "sobre", label: "A Zutic" },
+  { id: "solucoes", label: "Soluções" },
   { id: "contactos", label: "Contactos" },
 ];
 
@@ -36,8 +35,8 @@ export default function SiteHeader() {
                   ? "/contactos"
                   : link.id === "sobre"
                     ? "/sobre"
-                    : link.id === "servicos"
-                      ? "/servicos"
+                    : link.id === "solucoes"
+                      ? "/solucoes"
                       : link.id === "processo"
                         ? "/#processo"
                       : `/#${link.id}`
@@ -82,8 +81,8 @@ export default function SiteHeader() {
                   ? "/contactos"
                   : link.id === "sobre"
                     ? "/sobre"
-                    : link.id === "servicos"
-                      ? "/servicos"
+                    : link.id === "solucoes"
+                      ? "/solucoes"
                       : link.id === "processo"
                         ? "/#processo"
                       : `/#${link.id}`

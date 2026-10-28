@@ -47,7 +47,7 @@ const capabilities = [
     description:
       "Aplicações web, plataformas e sistemas de gestão concebidos em função dos processos e objetivos específicos de cada empresa.",
     icon: Code2,
-    href: "/servicos#software",
+    href: "/solucoes#software",
     action: "Explorar desenvolvimento",
   },
   {
@@ -55,7 +55,7 @@ const capabilities = [
     description:
       "Análise e planeamento tecnológico para ajudar a escolher soluções sustentáveis e preparadas para evoluir.",
     icon: Network,
-    href: "/servicos#consultoria",
+    href: "/solucoes#consultoria",
     action: "Conhecer a consultoria",
   },
 ];
@@ -90,19 +90,10 @@ const commitments = [
 export default function SobrePage() {
   return (
     <main>
-      <section
-        aria-labelledby="about-hero-title"
-        className="home-hero relative isolate flex min-h-[360px] items-center overflow-hidden bg-[#06142e] sm:min-h-[780px]"
-      >
+      <section aria-labelledby="about-hero-title" className="home-hero relative isolate flex min-h-[360px] items-center overflow-hidden bg-[#06142e] sm:min-h-[790px]" >
         <div aria-hidden="true" className="home-hero-grid absolute inset-0" />
-        <div
-          aria-hidden="true"
-          className="absolute -left-32 top-8 h-80 w-80 rounded-full bg-blue-500/20 blur-[120px]"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute -right-24 top-0 h-96 w-96 rounded-full bg-cyan-400/10 blur-[130px]"
-        />
+        <div aria-hidden="true" className="absolute -left-32 top-8 h-80 w-80 rounded-full bg-blue-500/20 blur-[120px]" />
+        <div aria-hidden="true" className="absolute -right-24 top-0 h-96 w-96 rounded-full bg-cyan-400/10 blur-[130px]" />
         <div className="relative z-10 mx-auto w-full max-w-4xl px-4 py-16 text-center sm:px-6 lg:px-8">
           <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-300/25 bg-blue-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-200">
             <span className="h-2 w-2 rounded-full bg-cyan-300" />
