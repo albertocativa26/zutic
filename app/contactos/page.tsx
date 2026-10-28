@@ -45,7 +45,6 @@ const contactChannels = [
 export default function ContactosPage() {
   return (
     <main>
-
       <section aria-labelledby="contact-channels-title" className="bg-white py-14 sm:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto mb-9 max-w-2xl text-center">
